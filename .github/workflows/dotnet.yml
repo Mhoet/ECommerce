@@ -1,0 +1,23 @@
+name: .NET
+
+on:
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      env:
+        HEROKU_API_KEY: 2eb64e9e-292c-4c36-8179-cee9e67c0270
+        APP_NAME: ecommerceweek8
+      run: |
+        docker build -t ecommerceweek8 .
+        docker tag ecommerceweek8 registry.heroku.com/$APP_NAME/web
+        docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
+        heroku container:push web -a $APP_NAME
+        heroku container:release web -a $APP_NAME
