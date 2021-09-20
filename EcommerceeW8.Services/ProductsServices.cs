@@ -19,7 +19,7 @@ namespace EcommerceeW8.Services
             _dbContext = dbContext;
         }
 
-        public IEnumerable<EcommerceW8.Models.Product> ReturnProductList()
+        public IEnumerable<Product> ReturnProductList()
         {
             IEnumerable<Product> productList = _dbContext.Product.Include(prod => prod.Category)
                 .Include(prod => prod.Images).ToList();
